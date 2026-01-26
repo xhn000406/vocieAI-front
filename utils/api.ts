@@ -1,5 +1,5 @@
 /**
- * API 配置
+ * API 配置 - 使用 React Native 内置的 fetch API
  */
 
 import { Platform } from 'react-native';
@@ -22,50 +22,97 @@ const getApiBaseUrl = () => {
 
 export const API_BASE_URL = getApiBaseUrl();
 
-// 创建 axios 实例（如果使用 axios）
-import axios from 'axios';
+// 使用 fetch API 替代 axios（React Native 内置，无需额外依赖）
+class ApiClient {
+  private baseURL: string;
+  private defaultHeaders: HeadersInit;
 
-export const apiClient = axios.create({
-  baseURL: API_BASE_URL,
-  timeout: 10000,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+  constructor(baseURL: string) {
+    this.baseURL = baseURL;
+    this.defaultHeaders = {
+      'Content-Type': 'application/json',
+    };
+  }
 
-// 请求拦截器：添加 token
-apiClient.interceptors.request.use(
-  async (config) => {
-    // 从 AsyncStorage 获取 token
+  private async getAuthHeaders(): Promise<HeadersInit> {
     const { storage } = await import('./storage');
     const token = await storage.getToken();
+    const headers = { ...this.defaultHeaders };
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      headers['Authorization'] = `Bearer ${token}`;
     }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
+    return headers;
   }
-);
 
-// 响应拦截器：处理错误
-apiClient.interceptors.response.use(
-  (response) => {
-    return response.data;
-  },
-  (error) => {
-    if (error.response) {
-      // 服务器返回了错误状态码
-      console.error('API Error:', error.response.data);
-    } else if (error.request) {
-      // 请求已发出但没有收到响应
-      console.error('Network Error:', error.request);
-    } else {
-      // 其他错误
-      console.error('Error:', error.message);
+  private async request<T>(
+    endpoint: string,
+    options: RequestInit = {}
+  ): Promise<T> {
+    const url = `${this.baseURL}${endpoint}`;
+    const headers = await this.getAuthHeaders();
+    
+    const config: RequestInit = {
+      ...options,
+      headers: {
+        ...headers,
+        ...options.headers,
+      },
+    };
+
+    try {
+      const response = await fetch(url, config);
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({
+          message: `HTTP Error: ${response.status} ${response.statusText}`,
+        }));
+        throw new Error(errorData.message || `HTTP Error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error('API Error:', error.message);
+        throw error;
+      }
+      console.error('Network Error:', error);
+      throw new Error('Network request failed');
     }
-    return Promise.reject(error);
   }
-);
 
+  async get<T>(endpoint: string, options?: RequestInit): Promise<T> {
+    return this.request<T>(endpoint, { ...options, method: 'GET' });
+  }
+
+  async post<T>(endpoint: string, data?: any, options?: RequestInit): Promise<T> {
+    return this.request<T>(endpoint, {
+      ...options,
+      method: 'POST',
+      body: data ? JSON.stringify(data) : undefined,
+    });
+  }
+
+  async put<T>(endpoint: string, data?: any, options?: RequestInit): Promise<T> {
+    return this.request<T>(endpoint, {
+      ...options,
+      method: 'PUT',
+      body: data ? JSON.stringify(data) : undefined,
+    });
+  }
+
+  async delete<T>(endpoint: string, options?: RequestInit): Promise<T> {
+    return this.request<T>(endpoint, { ...options, method: 'DELETE' });
+  }
+
+  async patch<T>(endpoint: string, data?: any, options?: RequestInit): Promise<T> {
+    return this.request<T>(endpoint, {
+      ...options,
+      method: 'PATCH',
+      body: data ? JSON.stringify(data) : undefined,
+    });
+  }
+}
+
+// 创建 API 客户端实例
+export const apiClient = new ApiClient(API_BASE_URL);
