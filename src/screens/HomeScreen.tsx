@@ -27,8 +27,11 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
         <Text style={styles.title}>Demo 页面集合</Text>
         <Text style={styles.subtitle}>选择下面的demo查看效果</Text>
       </View>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.content}>
-        {demos.map((demo) => (
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.content}
+      >
+        {demos.map(demo => (
           <TouchableOpacity
             key={demo.id}
             style={styles.card}

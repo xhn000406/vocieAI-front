@@ -24,7 +24,7 @@ export default function FormDemoScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <Text style={styles.title}>表单Demo</Text>
-      
+
       <View style={styles.formGroup}>
         <Text style={styles.label}>姓名</Text>
         <TextInput
@@ -85,7 +85,9 @@ export default function FormDemoScreen() {
           <Text style={styles.resultText}>表单数据：</Text>
           <Text style={styles.resultText}>姓名: {name || '未填写'}</Text>
           <Text style={styles.resultText}>邮箱: {email || '未填写'}</Text>
-          <Text style={styles.resultText}>密码: {password ? '***' : '未填写'}</Text>
+          <Text style={styles.resultText}>
+            密码: {password ? '***' : '未填写'}
+          </Text>
         </View>
       )}
     </ScrollView>

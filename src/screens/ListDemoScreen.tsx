@@ -17,11 +17,36 @@ interface ListItem {
 
 export default function ListDemoScreen() {
   const [items, setItems] = useState<ListItem[]>([
-    { id: '1', title: '项目 1', subtitle: '这是第一个列表项', color: '#FF6B6B' },
-    { id: '2', title: '项目 2', subtitle: '这是第二个列表项', color: '#4ECDC4' },
-    { id: '3', title: '项目 3', subtitle: '这是第三个列表项', color: '#45B7D1' },
-    { id: '4', title: '项目 4', subtitle: '这是第四个列表项', color: '#FFA07A' },
-    { id: '5', title: '项目 5', subtitle: '这是第五个列表项', color: '#98D8C8' },
+    {
+      id: '1',
+      title: '项目 1',
+      subtitle: '这是第一个列表项',
+      color: '#FF6B6B',
+    },
+    {
+      id: '2',
+      title: '项目 2',
+      subtitle: '这是第二个列表项',
+      color: '#4ECDC4',
+    },
+    {
+      id: '3',
+      title: '项目 3',
+      subtitle: '这是第三个列表项',
+      color: '#45B7D1',
+    },
+    {
+      id: '4',
+      title: '项目 4',
+      subtitle: '这是第四个列表项',
+      color: '#FFA07A',
+    },
+    {
+      id: '5',
+      title: '项目 5',
+      subtitle: '这是第五个列表项',
+      color: '#98D8C8',
+    },
   ]);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -42,7 +67,7 @@ export default function ListDemoScreen() {
   };
 
   const handleDelete = (id: string) => {
-    setItems(items.filter((item) => item.id !== id));
+    setItems(items.filter(item => item.id !== id));
   };
 
   const renderItem = ({ item }: { item: ListItem }) => (
@@ -68,7 +93,7 @@ export default function ListDemoScreen() {
       <FlatList
         data={items}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={item => item.id}
         contentContainerStyle={styles.list}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />

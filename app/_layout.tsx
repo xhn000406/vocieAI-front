@@ -2,7 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Text, TextInput } from 'react-native';
-import { DefaultTheme, ThemeProvider, useNavigationContainerRef } from '@react-navigation/native';
+import {
+  DefaultTheme,
+  ThemeProvider,
+  useNavigationContainerRef,
+} from '@react-navigation/native';
 import TabsLayout from './tabs/_layout';
 import LoginIndex from './login/index';
 import PersonalIndex from './personal/index';
@@ -25,7 +29,9 @@ const Stack = createStackNavigator();
 const whiteStatusBarRoutes = ['tabs'];
 
 function StackNavigator() {
-  const [statusBarStyle, setStatusBarStyle] = useState<'auto' | 'inverted' | 'light' | 'dark'>('auto');
+  const [statusBarStyle, setStatusBarStyle] = useState<
+    'auto' | 'inverted' | 'light' | 'dark'
+  >('auto');
   const [statusBarHidden, setStatusBarHidden] = useState(false);
   const navigationRef = useNavigationContainerRef();
   const prevRouteNameRef = useRef<string>('');
@@ -35,8 +41,9 @@ function StackNavigator() {
     if (!navigationRef.current) return;
 
     const unsubscribe = navigationRef.current.addListener('state', () => {
-      const currentRouteName = navigationRef.current?.getCurrentRoute()?.name || '';
-      
+      const currentRouteName =
+        navigationRef.current?.getCurrentRoute()?.name || '';
+
       if (whiteStatusBarRoutes.includes(currentRouteName)) {
         setStatusBarStyle('light');
       } else {
@@ -45,7 +52,12 @@ function StackNavigator() {
 
       // 记录路由变化（可用于统计等）
       if (prevRouteNameRef.current !== currentRouteName) {
-        console.log('路由变化:', prevRouteNameRef.current, '->', currentRouteName);
+        console.log(
+          '路由变化:',
+          prevRouteNameRef.current,
+          '->',
+          currentRouteName
+        );
         prevRouteNameRef.current = currentRouteName;
       }
     });
