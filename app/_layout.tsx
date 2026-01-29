@@ -11,6 +11,7 @@ import TabsLayout from './tabs/_layout';
 import LoginIndex from './login/index';
 import PersonalIndex from './personal/index';
 import NotFoundScreen from './+not-found';
+import { WhisperDemoScreen } from '../src/screens/WhisperDemoScreen';
 
 const Stack = createStackNavigator();
 
@@ -32,7 +33,6 @@ function StackNavigator() {
   const [statusBarStyle, setStatusBarStyle] = useState<
     'auto' | 'inverted' | 'light' | 'dark'
   >('auto');
-  const [statusBarHidden, setStatusBarHidden] = useState(false);
   const navigationRef = useNavigationContainerRef();
   const prevRouteNameRef = useRef<string>('');
 
@@ -70,7 +70,6 @@ function StackNavigator() {
       {/* 顶部状态栏 */}
       <StatusBar
         style={statusBarStyle}
-        hidden={statusBarHidden}
         translucent={true}
         backgroundColor="transparent"
       />
@@ -84,6 +83,14 @@ function StackNavigator() {
         <Stack.Screen name="tabs" component={TabsLayout} />
         <Stack.Screen name="login" component={LoginIndex} />
         <Stack.Screen name="personal" component={PersonalIndex} />
+        <Stack.Screen
+          name="whisper"
+          component={WhisperDemoScreen}
+          options={{
+            headerShown: true,
+            title: '语音识别',
+          }}
+        />
         <Stack.Screen name="+not-found" component={NotFoundScreen} />
       </Stack.Navigator>
     </>

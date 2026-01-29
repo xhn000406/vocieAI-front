@@ -16,7 +16,9 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.voiceai.app",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSMicrophoneUsageDescription": "此应用需要访问麦克风以进行语音识别",
+        "NSSpeechRecognitionUsageDescription": "此应用需要语音识别功能以转换语音为文字"
       }
     },
     "android": {
@@ -26,7 +28,11 @@
       },
       "package": "com.voiceai.app",
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.INTERNET"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -36,7 +42,14 @@
         "projectId": "3e01e035-97a9-4aa7-8eb3-ab9fce89bb36"
       }
     },
-    "plugins": [],
+    "plugins": [
+      [
+        "expo-av",
+        {
+          "microphonePermission": "此应用需要访问麦克风以进行语音识别"
+        }
+      ]
+    ],
     "owner": "voiceai"
   }
 }

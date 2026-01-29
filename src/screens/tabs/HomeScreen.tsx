@@ -1,10 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 /**
  * 首页业务实现
  */
 export default function HomeScreen() {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -12,10 +15,17 @@ export default function HomeScreen() {
         <Text style={styles.subtitle}>欢迎使用 Voice AI App</Text>
       </View>
       <ScrollView style={styles.content}>
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>功能卡片 1</Text>
-          <Text style={styles.cardDescription}>这里是首页的内容</Text>
-        </View>
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() => navigation.navigate('whisper' as never)}
+          activeOpacity={0.7}
+        >
+          <Text style={styles.cardTitle}>🎤 语音识别</Text>
+          <Text style={styles.cardDescription}>
+            使用 Whisper 进行离线语音转文字
+          </Text>
+          <Text style={styles.cardArrow}>→</Text>
+        </TouchableOpacity>
         <View style={styles.card}>
           <Text style={styles.cardTitle}>功能卡片 2</Text>
           <Text style={styles.cardDescription}>可以在这里添加更多功能</Text>
@@ -75,5 +85,12 @@ const styles = StyleSheet.create({
   cardDescription: {
     fontSize: 14,
     color: '#666',
+  },
+  cardArrow: {
+    fontSize: 20,
+    color: '#007AFF',
+    position: 'absolute',
+    right: 20,
+    top: 20,
   },
 });
