@@ -1,47 +1,36 @@
-import { useEffect } from 'react';
-import { View, ActivityIndicator } from 'react-native';
-import { useRouter } from 'expo-router';
-import { useAuth } from '@/contexts/AuthContext';
-import { storage } from '@/utils/storage';
-import { useTheme } from '@/contexts/ThemeContext';
-import { LinearGradient } from 'expo-linear-gradient';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
-export default function SplashScreen() {
-  const router = useRouter();
-  const { user, isLoading } = useAuth();
-  const { theme } = useTheme();
-
-  useEffect(() => {
-    checkInitialRoute();
-  }, [isLoading]);
-
-  const checkInitialRoute = async () => {
-    if (isLoading) return;
-
-    const isOnboarded = await storage.getIsOnboarded();
-    
-    if (!isOnboarded) {
-      router.replace('/onboarding');
-    } else if (!user) {
-      router.replace('/auth');
-    } else {
-      router.replace('/(tabs)/home');
-    }
-  };
-
+/**
+ * 首页
+ * 这是应用的入口页面
+ */
+export default function Index() {
   return (
-    <LinearGradient
-      colors={theme.colors.primaryGradient}
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <View style={{ alignItems: 'center' }}>
-        <ActivityIndicator size="large" color="#ffffff" />
-      </View>
-    </LinearGradient>
+    <View style={styles.container}>
+      <Text style={styles.title}>欢迎使用 Voice AI App</Text>
+      <Text style={styles.subtitle}>从这里开始你的应用之旅</Text>
+    </View>
   );
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 10,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#666',
+    textAlign: 'center',
+  },
+});
