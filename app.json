@@ -1,63 +1,55 @@
 {
   "expo": {
-    "name": "笔记",
-    "slug": "biji",
+    "name": "Voice AI App",
+    "slug": "voiceai",
     "version": "1.0.0",
     "orientation": "portrait",
-    "userInterfaceStyle": "automatic",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
     "splash": {
+      "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#6366f1"
+      "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.biji.app",
-      "buildNumber": "1",
+      "bundleIdentifier": "com.voiceai.app",
       "infoPlist": {
-        "NSMicrophoneUsageDescription": "需要访问麦克风以进行录音和语音转写",
-        "NSSpeechRecognitionUsageDescription": "需要语音识别权限以进行实时转写"
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSMicrophoneUsageDescription": "此应用需要访问麦克风以进行语音识别",
+        "NSSpeechRecognitionUsageDescription": "此应用需要语音识别功能以转换语音为文字"
       }
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#6366f1"
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
       },
-      "package": "com.biji.app",
-      "versionCode": 1,
+      "package": "com.voiceai.app",
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
       "permissions": [
-        "RECORD_AUDIO",
-        "WRITE_EXTERNAL_STORAGE",
-        "READ_EXTERNAL_STORAGE"
+        "android.permission.RECORD_AUDIO",
+        "android.permission.INTERNET"
       ]
     },
-    "web": {},
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "3e01e035-97a9-4aa7-8eb3-ab9fce89bb36"
+      }
+    },
     "plugins": [
-      "expo-router",
       [
         "expo-av",
         {
-          "microphonePermission": "需要访问麦克风以进行录音和语音转写"
+          "microphonePermission": "此应用需要访问麦克风以进行语音识别"
         }
-      ],
-      [
-        "expo-notifications",
-        {
-          "color": "#6366f1"
-        }
-      ],
-      "expo-font"
+      ]
     ],
-    "scheme": "biji",
-    "extra": {
-      "router": {
-        "origin": false
-      },
-      "eas": {
-        "projectId": "your-project-id"
-      }
-    }
+    "owner": "voiceai"
   }
 }
