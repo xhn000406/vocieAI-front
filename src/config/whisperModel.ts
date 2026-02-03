@@ -79,7 +79,7 @@ export const WHISPER_MODELS: Record<ModelType, ModelConfig> = {
  * 当前使用的模型类型
  * 修改这里即可切换模型
  */
-export const CURRENT_MODEL: ModelType = 'base'; // 可以改为 'base', 'small', 'medium', 'large'
+export const CURRENT_MODEL: ModelType = 'tiny'; // 可以改为 'base', 'small', 'medium', 'large'
 
 /**
  * 获取当前模型配置
@@ -93,6 +93,7 @@ export function getCurrentModelConfig(): ModelConfig {
  * @param modelType 模型类型，如果不提供则使用 CURRENT_MODEL
  */
 export function getModelPath(modelType?: ModelType): string {
+  console.log(modelType)
   const model = modelType ? WHISPER_MODELS[modelType] : getCurrentModelConfig();
   return model.fileName;
 }
@@ -102,6 +103,7 @@ export function getModelPath(modelType?: ModelType): string {
  * @param modelType 模型类型，如果不提供则使用 CURRENT_MODEL
  */
 export function getModelInitOptions(modelType?: ModelType) {
+  
   const model = modelType ? WHISPER_MODELS[modelType] : getCurrentModelConfig();
   return {
     filePath: model.fileName,

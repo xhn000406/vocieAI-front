@@ -48,8 +48,16 @@
         {
           "microphonePermission": "此应用需要访问麦克风以进行语音识别"
         }
+      ],[
+        "expo-build-properties",
+        {
+          "ios": {
+            "deploymentTarget": "15.1"
+          }
+        }
       ]
     ],
+    
     "owner": "voiceai"
   }
 }

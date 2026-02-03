@@ -1,7 +1,7 @@
 // Whisper 相关类型定义
 
 export interface WhisperInitOptions {
-  filePath: string; // 模型文件路径
+  filePath: string | number; // 模型文件路径
   isBundleAsset?: boolean; // 是否为 bundle 资源
   useGpu?: boolean; // 是否使用 GPU（iOS）
   useCoreMLIos?: boolean; // iOS 是否使用 CoreML
@@ -38,4 +38,3 @@ export interface WhisperError {
   code: string;
   message: string;
 }
-

@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Alert,
-  ActivityIndicator,
-} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import { Audio } from 'expo-av';
 import { whisperService } from '../services/whisperService';
 import type { WhisperResult } from '../types/whisper';
 
 interface WhisperRecorderProps {
-  modelPath: string; // Whisper 模型文件路径
+  modelPath: string | number;
   onTranscriptionComplete?: (result: WhisperResult) => void;
   onError?: (error: Error) => void;
 }
@@ -45,22 +38,13 @@ export const WhisperRecorder: React.FC<WhisperRecorderProps> = ({
 
       try {
         setInitializing(true);
-        console.log('[WhisperRecorder] 开始初始化，模型路径:', modelPath);
 
-        // Android 上如果路径是 file:///android_asset/，则 isBundleAsset 应该为 false（完整路径）
-        // 如果只是文件名，则 isBundleAsset 应该为 true（bundle 资源）
-        // iOS 上如果只是文件名，则 isBundleAsset 应该为 true
         const isBundleAsset =
-          !modelPath.startsWith('file://') &&
-          !modelPath.startsWith('/') &&
-          !modelPath.startsWith('file:///android_asset/');
-
-        console.log(
-          '[WhisperRecorder] isBundleAsset:',
-          isBundleAsset,
-          'modelPath:',
-          modelPath
-        );
+          typeof modelPath === 'number'
+            ? true
+            : !modelPath.toString().startsWith('file://') &&
+              !modelPath.toString().startsWith('/') &&
+              !modelPath.toString().startsWith('file:///android_asset/');
 
         await whisperService.init({
           filePath: modelPath,

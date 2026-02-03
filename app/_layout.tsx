@@ -12,6 +12,7 @@ import LoginIndex from './login/index';
 import PersonalIndex from './personal/index';
 import NotFoundScreen from './+not-found';
 import { WhisperDemoScreen } from '../src/screens/WhisperDemoScreen';
+import WhisperDemoScreenIOS from '../src/screens/WhisperDemoScreenIOS';
 
 const Stack = createStackNavigator();
 
@@ -86,6 +87,14 @@ function StackNavigator() {
         <Stack.Screen
           name="whisper"
           component={WhisperDemoScreen}
+          options={{
+            headerShown: true,
+            title: '语音识别',
+          }}
+        />
+         <Stack.Screen
+          name="whisperIOS"
+          component={WhisperDemoScreenIOS}
           options={{
             headerShown: true,
             title: '语音识别',

@@ -26,10 +26,16 @@ export default function HomeScreen() {
           </Text>
           <Text style={styles.cardArrow}>→</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() => navigation.navigate('whisperIOS' as never)}
+          activeOpacity={0.7}
+        >
         <View style={styles.card}>
           <Text style={styles.cardTitle}>功能卡片 2</Text>
           <Text style={styles.cardDescription}>可以在这里添加更多功能</Text>
         </View>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
